@@ -1,9 +1,8 @@
-from hpelm import modules as mod
-import glob
-import numpy as np
-from PIL import Image
-import os
 import math
+import os
+
+from PIL import Image
+
 
 def fullSet():
     #TODO@Naren: Finish this function plz.
@@ -56,8 +55,7 @@ for row in matrix:
     print("Row Size: " + str(len(row)))
 
 print("Total matrix size: " + str(len(matrix)))
-print("")
-#
+
 # OriginalTrain = glob.glob(os.path.join(DATALOCATION, '/Original/train/*.jpg'))
 # print("Completed reading in OriginalTrain.")
 # OriginalTest = glob.glob(os.path.join(DATALOCATION, '/Original/test/*.jpg'))
