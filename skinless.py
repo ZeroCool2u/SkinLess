@@ -15,12 +15,12 @@ LOCAL = False
 d = 7
 
 ORIGINAL_SUBFOLDERS = [
-    ('/Shared/bdagroup3/FaceSkinDataset/Original/train', '/Shared/bdagroup3/FaceSkinDataset/XTrainUJ.h5'),
-    ('/Shared/bdagroup3/FaceSkinDataset/Original/test', '/Shared/bdagroup3/FaceSkinDataset/XTestUJ.h5')]
+    ('/Shared/bdagroup3/FaceSkinDataset/Original/train', '/Shared/bdagroup3/FaceSkinDataset/XTrainFull.h5'),
+    ('/Shared/bdagroup3/FaceSkinDataset/Original/test', '/Shared/bdagroup3/FaceSkinDataset/XTestFull.h5')]
 # ('/Shared/bdagroup3/FaceSkinDataset/Original/val', '/Shared/bdagroup3/FaceSkinDataset/orgVal.hdf5')]
 
-SKIN_SUBFOLDERS = [('/Shared/bdagroup3/FaceSkinDataset/Skin/train', '/Shared/bdagroup3/FaceSkinDataset/TTrainUJ.h5'),
-                   ('/Shared/bdagroup3/FaceSkinDataset/Skin/test', '/Shared/bdagroup3/FaceSkinDataset/TTestUJ.h5')]
+SKIN_SUBFOLDERS = [('/Shared/bdagroup3/FaceSkinDataset/Skin/train', '/Shared/bdagroup3/FaceSkinDataset/TTrainFull.h5'),
+                   ('/Shared/bdagroup3/FaceSkinDataset/Skin/test', '/Shared/bdagroup3/FaceSkinDataset/TTestFull.h5')]
 
 
 #                       ('/Shared/bdagroup3/FaceSkinDataset/Skin/val', '/Shared/bdagroup3/FaceSkinDataset/skinVal.hdf5')]
@@ -53,7 +53,7 @@ def fullDataPrep(SUBSET):
                 q = q + d
             p = p + d
             q = 0
-    return np.asarray(m, dtype=np.float32)
+    return np.asarray(m, dtype=np.float64)
 
 
 def unionJackPrep(SUBSET):
@@ -94,7 +94,7 @@ def main(argv):
     for file, saveTarget in ORIGINAL_SUBFOLDERS:
         h5file = saveTarget
         h5 = open_file(h5file, "w")
-        X = unionJackPrep(file)
+        X = fullDataPrep(file)
         atom = Atom.from_dtype(X.dtype)
         flt = Filters(complevel=0)
         h5data = h5.create_carray(h5.root, "data", atom, X.shape, filters=flt)

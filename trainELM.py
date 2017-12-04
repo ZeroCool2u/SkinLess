@@ -17,9 +17,10 @@ SKIN_SUBFOLDERS = [('/Shared/bdagroup3/FaceSkinDataset/Skin/train', '/Shared/bda
 
 
 def setupHPELM():
+    # TODO: Ask about the weights here.
     model0 = hpelm.HPELM(75, 75, precision='double', classification='c', tprint=30)
-    model0.add_neurons(3000, 'sigm')
-    model0.save('/Shared/bdagroup3/model3000.hf')
+    model0.add_neurons(19000, 'sigm')
+    model0.save('/Shared/bdagroup3/model19000.hf')
     return model0
 
 
