@@ -30,7 +30,7 @@ def fullDataPrep(SUBSET):
     all_files = glob.glob(os.path.join(SUBSET, r'*.*'))
     print("Current Subset: " + SUBSET)
     all_files.sort()
-    # Force ALL the images to be loaded into memory now.
+    # Force ALL the image handles to be loaded into memory now.
     images = list(map(Image.open, all_files))
     for q in range(0, len(images)):
         print("Current file: " + all_files[q])
@@ -85,13 +85,12 @@ def unionJackPrep(SUBSET):
                 q = q + d
             p = p + d
             q = 0
-    # Single precision, because fuck it. Also, time and GPU's.
     return np.asarray(m, dtype=np.float32)
 
 
 def main(argv):
     # Manually change the list we iterate through to select between the data and masks. (Doing both kills the node.)
-    for file, saveTarget in ORIGINAL_SUBFOLDERS:
+    for file, saveTarget in SKIN_SUBFOLDERS:
         h5file = saveTarget
         h5 = open_file(h5file, "w")
         X = unionJackPrep(file)
@@ -110,7 +109,6 @@ def main(argv):
         del h5data
         gc.collect()
         XTrainMean, XTrainSTD = modules.normalize_hdf5(saveTarget)
-
 
 
 if __name__ == "__main__":

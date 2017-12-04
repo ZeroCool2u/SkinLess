@@ -1,29 +1,34 @@
 import os
 import hpelm
+from hpelm import modules
 from sys import argv
 from datetime import datetime
+import gc
 
 __project__ = "SkinLess"
 __author__ = "Theo Linnemann"
 
-d = 7
-
 ORIGINAL_SUBFOLDERS = [
-    ('/Shared/bdagroup3/FaceSkinDataset/Original/train', '/Shared/bdagroup3/FaceSkinDataset/orgTrain.hdf5'),
-    ('/Shared/bdagroup3/FaceSkinDataset/Original/test', '/Shared/bdagroup3/FaceSkinDataset/orgTest.hdf5')]
+    ('/Shared/bdagroup3/FaceSkinDataset/Original/train', '/Shared/bdagroup3/FaceSkinDataset/XTrainUJ.h5'),
+    ('/Shared/bdagroup3/FaceSkinDataset/Original/test', '/Shared/bdagroup3/FaceSkinDataset/XTestUJ.h5')]
 
-SKIN_SUBFOLDERS = [('/Shared/bdagroup3/FaceSkinDataset/Skin/train', '/Shared/bdagroup3/FaceSkinDataset/skinTrain.hdf5'),
-                   ('/Shared/bdagroup3/FaceSkinDataset/Skin/test', '/Shared/bdagroup3/FaceSkinDataset/skinTest.hdf5')]
+SKIN_SUBFOLDERS = [('/Shared/bdagroup3/FaceSkinDataset/Skin/train', '/Shared/bdagroup3/FaceSkinDataset/TTrainUJ.h5'),
+                   ('/Shared/bdagroup3/FaceSkinDataset/Skin/test', '/Shared/bdagroup3/FaceSkinDataset/TTestUJ.h5')]
 
 
 def setupHPELM():
-    # TODO: Start here: https://hpelm.readthedocs.io/en/latest/parallel.html
-    pass
+    model0 = hpelm.HPELM(75, 75, precision='double', classification='c', tprint=30)
+    model0.add_neurons(3000, 'sigm')
+    model0.save('/Shared/bdagroup3/model3000.hf')
+    return model0
 
 
 def main(argv):
-    HPELM = setupHPELM()
-
+    model = setupHPELM()
+    model.train('/Shared/bdagroup3/FaceSkinDataset/XTrainUJ.h5', '/Shared/bdagroup3/FaceSkinDataset/TTrainUJ.h5')
+    model.predict('/Shared/bdagroup3/FaceSkinDataset/XTrainUJ.h5', '/Shared/bdagroup3/FaceSkinDataset/YUJ.h5')
+    err_train = model.error("/Shared/bdagroup3/FaceSkinDataset/XTrainUJ.h5", "/Shared/bdagroup3/FaceSkinDataset/YUJ.h5")
+    print('Training Error: ' + str(err_train))
 
 if __name__ == "__main__":
     run_date = datetime.now()
