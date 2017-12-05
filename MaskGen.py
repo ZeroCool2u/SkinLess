@@ -1,4 +1,4 @@
-import math
+import mpmath
 import os
 import glob
 from sys import argv
@@ -9,18 +9,18 @@ import numpy as np
 import gc
 from hpelm import modules
 
-__project__ = "SkinLess"
+__project__ = "MaskGen"
 __author__ = "Theo Linnemann"
 LOCAL = False
 d = 7
 
 ORIGINAL_SUBFOLDERS = [
-    ('/Shared/bdagroup3/FaceSkinDataset/Original/train', '/Shared/bdagroup3/FaceSkinDataset/XTrainFull.h5'),
-    ('/Shared/bdagroup3/FaceSkinDataset/Original/test', '/Shared/bdagroup3/FaceSkinDataset/XTestFull.h5')]
+    ('/Shared/bdagroup3/FaceSkinDataset/Original/train', '/Shared/bdagroup3/FaceSkinDataset/XTrainUJ.h5'),
+    ('/Shared/bdagroup3/FaceSkinDataset/Original/test', '/Shared/bdagroup3/FaceSkinDataset/XTestUJ.h5')]
 # ('/Shared/bdagroup3/FaceSkinDataset/Original/val', '/Shared/bdagroup3/FaceSkinDataset/orgVal.hdf5')]
 
-SKIN_SUBFOLDERS = [('/Shared/bdagroup3/FaceSkinDataset/Skin/train', '/Shared/bdagroup3/FaceSkinDataset/TTrainFull.h5'),
-                   ('/Shared/bdagroup3/FaceSkinDataset/Skin/test', '/Shared/bdagroup3/FaceSkinDataset/TTestFull.h5')]
+SKIN_SUBFOLDERS = [('/Shared/bdagroup3/FaceSkinDataset/Skin/train', '/Shared/bdagroup3/FaceSkinDataset/TTrainUJ.h5'),
+                   ('/Shared/bdagroup3/FaceSkinDataset/Skin/test', '/Shared/bdagroup3/FaceSkinDataset/TTestUJ.h5')]
 
 
 #                       ('/Shared/bdagroup3/FaceSkinDataset/Skin/val', '/Shared/bdagroup3/FaceSkinDataset/skinVal.hdf5')]
@@ -36,8 +36,8 @@ def fullDataPrep(SUBSET):
         print("Current file: " + all_files[q])
         im = images[q]
         width, height = im.size
-        width_blocks = int(math.floor(width / d))
-        height_blocks = int(math.floor(height / d))
+        width_blocks = int(mpmath.floor(width / d))
+        height_blocks = int(mpmath.floor(height / d))
         rgb_im = im.convert('RGB')
         p = q = s = 0
         for i in range(0, height_blocks):
@@ -46,9 +46,24 @@ def fullDataPrep(SUBSET):
                 for k in range(0, d):
                     for l in range(0, d):
                         r, g, b = rgb_im.getpixel((q + k, p + l))
-                        a.append(r)
-                        a.append(g)
-                        a.append(b)
+                        if (r != 255):
+                            r = 1
+                            a.append(r)
+                        else:
+                            r = 0
+                            a.append(r)
+                        if (g != 255):
+                            g = 1
+                            a.append(g)
+                        else:
+                            g = 0
+                            a.append(g)
+                        if (b != 255):
+                            b = 1
+                            a.append(b)
+                        else:
+                            b = 0
+                            a.append(b)
                 m.append(a)
                 q = q + d
             p = p + d
@@ -67,8 +82,8 @@ def unionJackPrep(SUBSET):
         print("Current file: " + all_files[q])
         im = images[q]
         width, height = im.size
-        width_blocks = int(math.floor(width / d))
-        height_blocks = int(math.floor(height / d))
+        width_blocks = int(mpmath.floor(width / d))
+        height_blocks = int(mpmath.floor(height / d))
         rgb_im = im.convert('RGB')
         p = q = s = 0
         for i in range(0, height_blocks):
@@ -76,16 +91,31 @@ def unionJackPrep(SUBSET):
                 a = []
                 for k in range(0, d):
                     for l in range(0, d):
-                        if (k == l) or (k == math.floor(d / 2)) or (l == math.floor(d / 2)) or (k + l == d - 1):
+                        if (k == l) or (k == mpmath.floor(d / 2)) or (l == mpmath.floor(d / 2)) or (k + l == d - 1):
                             r, g, b = rgb_im.getpixel((q + k, p + l))
-                            a.append(r)
-                            a.append(g)
-                            a.append(b)
+                            if (r != 255):
+                                r = 1
+                                a.append(r)
+                            else:
+                                r = 0
+                                a.append(r)
+                            if (g != 255):
+                                g = 1
+                                a.append(g)
+                            else:
+                                g = 0
+                                a.append(g)
+                            if (b != 255):
+                                b = 1
+                                a.append(b)
+                            else:
+                                b = 0
+                                a.append(b)
                 m.append(a)
                 q = q + d
             p = p + d
             q = 0
-    return np.asarray(m, dtype=np.float32)
+    return np.asarray(m, dtype=np.float64)
 
 
 def main(argv):
@@ -93,7 +123,7 @@ def main(argv):
     for file, saveTarget in SKIN_SUBFOLDERS:
         h5file = saveTarget
         h5 = open_file(h5file, "w")
-        X = fullDataPrep(file)
+        X = unionJackPrep(file)
         atom = Atom.from_dtype(X.dtype)
         flt = Filters(complevel=0)
         h5data = h5.create_carray(h5.root, "data", atom, X.shape, filters=flt)
@@ -108,7 +138,7 @@ def main(argv):
         del flt
         del h5data
         gc.collect()
-        XTrainMean, XTrainSTD = modules.normalize_hdf5(saveTarget)
+        print("No mean or std to compute.")
 
 
 if __name__ == "__main__":
