@@ -8,28 +8,25 @@ import gc
 __project__ = "SkinLess"
 __author__ = "Theo Linnemann"
 
-ORIGINAL_SUBFOLDERS = [
-    ('/Shared/bdagroup3/FaceSkinDataset/Original/train', '/Shared/bdagroup3/FaceSkinDataset/XTrainUJ.h5'),
-    ('/Shared/bdagroup3/FaceSkinDataset/Original/test', '/Shared/bdagroup3/FaceSkinDataset/XTestUJ.h5')]
-
-SKIN_SUBFOLDERS = [('/Shared/bdagroup3/FaceSkinDataset/Skin/train', '/Shared/bdagroup3/FaceSkinDataset/TTrainUJ.h5'),
-                   ('/Shared/bdagroup3/FaceSkinDataset/Skin/test', '/Shared/bdagroup3/FaceSkinDataset/TTestUJ.h5')]
-
-
 def setupHPELM():
-    # TODO: Ask about the weights here.
     model0 = hpelm.HPELM(75, 75, precision='double', classification='c', tprint=30)
-    model0.add_neurons(19000, 'sigm')
-    model0.save('/Shared/bdagroup3/model19000.hf')
+    model0.add_neurons(1000, 'sigm')
+    model0.save('/Shared/bdagroup3/model1000.hf')
     return model0
 
 
 def main(argv):
     model = setupHPELM()
-    model.train('/Shared/bdagroup3/FaceSkinDataset/XTrainUJ.h5', '/Shared/bdagroup3/FaceSkinDataset/TTrainUJ.h5')
-    model.predict('/Shared/bdagroup3/FaceSkinDataset/XTrainUJ.h5', '/Shared/bdagroup3/FaceSkinDataset/YUJ.h5')
-    err_train = model.error("/Shared/bdagroup3/FaceSkinDataset/XTrainUJ.h5", "/Shared/bdagroup3/FaceSkinDataset/YUJ.h5")
+    model.train('/Shared/bdagroup3/FaceSkinDataset2/XTrainUJ.h5', '/Shared/bdagroup3/FaceSkinDataset2/TTrainUJ.h5')
+    model.predict('/Shared/bdagroup3/FaceSkinDataset2/XTrainUJ.h5', '/Shared/bdagroup3/FaceSkinDataset2/YTrainUJ.h5')
+    err_train = model.error("/Shared/bdagroup3/FaceSkinDataset2/YTrainUJ.h5",
+                            '/Shared/bdagroup3/FaceSkinDataset2/TTrainUJ.h5')
     print('Training Error: ' + str(err_train))
+
+    model.predict('/Shared/bdagroup3/FaceSkinDataset2/XTestUJ.h5', '/Shared/bdagroup3/FaceSkinDataset2/YTestUJ.h5')
+    err_test = model.error("/Shared/bdagroup3/FaceSkinDataset2/YTestUJ.h5",
+                           '/Shared/bdagroup3/FaceSkinDataset2/TTestUJ.h5')
+    print('Test Error: ' + str(err_test))
 
 if __name__ == "__main__":
     run_date = datetime.now()

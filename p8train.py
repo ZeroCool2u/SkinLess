@@ -16,8 +16,8 @@ SKIN_SUBFOLDERS = [('/Shared/bdagroup3/FaceSkinDataset/Skin/train', '/Shared/bda
 
 def addData(dimensions, startRow, numRows):
     model0 = hpelm.HPELM(dimensions[0], dimensions[1])
-    model0.load('/Shared/bdagroup3/modelMaster19000.hf')
-    model0.add_data('/Shared/bdagroup3/FaceSkinDataset/XTrainUJ.h5', '/Shared/bdagroup3/FaceSkinDataset/TTrainUJ.h5',
+    model0.load('/Shared/bdagroup3/pmodelMaster1500.hf')
+    model0.add_data('/Shared/bdagroup3/FaceSkinDataset2/XTrainUJ.h5', '/Shared/bdagroup3/FaceSkinDataset2/TTrainUJ.h5',
                     istart=startRow, icount=numRows, fHH="/Shared/bdagroup3/DONOTTOUCH/HH.h5",
                     fHT="/Shared/bdagroup3/DONOTTOUCH/HT.h5")
 

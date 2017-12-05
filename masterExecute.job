@@ -1,0 +1,11 @@
+#!/bin/sh
+#$ -M theo-linnemann@uiowa.edu
+#$ -m bea
+#$ -N MasterController
+#$ -j y
+#$ -o /Shared/bdagroup3/masterControllerOutput.txt
+#$ -l std_mem
+#$ -pe smp 4
+OMP_NUM_THREADS=4
+python /Shared/bdagroup3/pMasterTrain.py
+

@@ -1,0 +1,11 @@
+#!/bin/sh
+#$ -q UI-HM
+#$ -M theo-linnemann@uiowa.edu
+#$ -m bea
+#$ -N slave1
+#$ -j y
+#$ -o /Shared/bdagroup3/slave1output.txt
+#$ -l high_mem
+#$ -pe smp 16
+OMP_NUM_THREADS=16
+python /Shared/bdagroup3/p1train.py

@@ -1,0 +1,12 @@
+#!/bin/sh
+#$ -q UI-HM
+#$ -M theo-linnemann@uiowa.edu
+#$ -m bea
+#$ -N fullPicGen2
+#$ -l high_mem
+#$ -j y
+#$ -o /Shared/bdagroup3/FPGoutput2.txt
+#$ -pe smp 16
+OMP_NUM_THREADS=16
+python /Shared/bdagroup3/skinless.py
+
