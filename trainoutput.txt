@@ -1,0 +1,66 @@
+/Users/tlinnemann/virtualenv/skin2/lib/python2.7/site-packages/hpelm/nnets/slfn.py:62: RuntimeWarning: overflow encountered in exp
+  self.func["sigm"] = lambda X, W, B: 1 / (1 + np.exp(np.dot(X, W) + B))
+('Running...', 'SkinLess', 'by', 'Theo Linnemann', 'on', '12-05-2017')
+ 
+processing batch 326/7061, eta 0:10:20
+processing batch 656/7061, eta 0:09:46
+processing batch 987/7061, eta 0:09:14
+processing batch 1270/7061, eta 0:09:07
+processing batch 1553/7061, eta 0:08:52
+processing batch 1837/7061, eta 0:08:32
+processing batch 2125/7061, eta 0:08:08
+processing batch 2413/7061, eta 0:07:43
+processing batch 2703/7061, eta 0:07:16
+processing batch 2996/7061, eta 0:06:47
+processing batch 3276/7061, eta 0:06:21
+processing batch 3558/7061, eta 0:05:55
+processing batch 3833/7061, eta 0:05:29
+processing batch 4140/7061, eta 0:04:56
+processing batch 4476/7061, eta 0:04:20
+processing batch 4810/7061, eta 0:03:45
+processing batch 5136/7061, eta 0:03:11
+processing batch 5465/7061, eta 0:02:37
+processing batch 5750/7061, eta 0:02:10
+processing batch 6031/7061, eta 0:01:42
+processing batch 6332/7061, eta 0:01:12
+processing batch 6620/7061, eta 0:00:44
+processing batch 6912/7061, eta 0:00:14
+processing batch 565/7061, eta 0:05:44
+processing batch 1037/7061, eta 0:05:48
+processing batch 1562/7061, eta 0:05:16
+processing batch 2113/7061, eta 0:04:41
+processing batch 2633/7061, eta 0:04:12
+processing batch 3206/7061, eta 0:03:36
+processing batch 3687/7061, eta 0:03:12
+processing batch 4171/7061, eta 0:02:46
+processing batch 4683/7061, eta 0:02:17
+processing batch 5228/7061, eta 0:01:45
+processing batch 5771/7061, eta 0:01:13
+processing batch 6299/7061, eta 0:00:43
+processing batch 6867/7061, eta 0:00:11
+Classification Training Error: 0.0710658475069
+processing batch 546/11570, eta 0:10:05
+processing batch 996/11570, eta 0:10:37
+processing batch 1541/11570, eta 0:09:46
+processing batch 2033/11570, eta 0:09:23
+processing batch 2573/11570, eta 0:08:44
+processing batch 3092/11570, eta 0:08:13
+processing batch 3630/11570, eta 0:07:39
+processing batch 4120/11570, eta 0:07:14
+processing batch 4626/11570, eta 0:06:45
+processing batch 5117/11570, eta 0:06:18
+processing batch 5628/11570, eta 0:05:48
+processing batch 6122/11570, eta 0:05:20
+processing batch 6619/11570, eta 0:04:52
+processing batch 7143/11570, eta 0:04:20
+processing batch 7676/11570, eta 0:03:48
+processing batch 8193/11570, eta 0:03:18
+processing batch 8733/11570, eta 0:02:45
+processing batch 9245/11570, eta 0:02:16
+processing batch 9765/11570, eta 0:01:45
+processing batch 10263/11570, eta 0:01:16
+processing batch 10770/11570, eta 0:00:46
+processing batch 11265/11570, eta 0:00:17
+Classification Test Error: 0.0845159177104
+ 
+('Done with', 'SkinLess')
