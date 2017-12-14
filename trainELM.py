@@ -21,12 +21,12 @@ def main(argv):
     model.predict('/Shared/bdagroup3/FaceSkinDataset2/XTrainUJ.h5', '/Shared/bdagroup3/FaceSkinDataset2/YTrainUJ.h5')
     err_train = model.error("/Shared/bdagroup3/FaceSkinDataset2/YTrainUJ.h5",
                             '/Shared/bdagroup3/FaceSkinDataset2/TTrainUJ.h5')
-    print('Training Error: ' + str(err_train))
+    print('Classification Training Error: ' + str(err_train))
 
     model.predict('/Shared/bdagroup3/FaceSkinDataset2/XTestUJ.h5', '/Shared/bdagroup3/FaceSkinDataset2/YTestUJ.h5')
     err_test = model.error("/Shared/bdagroup3/FaceSkinDataset2/YTestUJ.h5",
                            '/Shared/bdagroup3/FaceSkinDataset2/TTestUJ.h5')
-    print('Test Error: ' + str(err_test))
+    print('Classification Test Error: ' + str(err_test))
 
 if __name__ == "__main__":
     run_date = datetime.now()
